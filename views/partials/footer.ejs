@@ -1,0 +1,20 @@
+<footer class="w-1/2 self-center justify-end py-2">
+
+    <hr class="h-1 mx-auto border-0 rounded my-3 bg-sky-950">
+    <p class="text-slate-500 font-text text-sm text-center">Jairo García</p>
+
+</footer>
+<script>
+    function abrirModal(id, note) {
+        const textArea = document.getElementById('edit-note')
+        document.getElementById('idNoteInput').setAttribute("value", id); // Añade un id a tu input hidden
+
+        textArea.value = note;
+        console.log(note, id);
+    }
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
+
+</html>

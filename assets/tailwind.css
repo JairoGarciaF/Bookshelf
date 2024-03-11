@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Hedvig+Letters+Serif:opsz@12..24&family=Mate+SC&family=Ojuju:wght@200..800&display=swap');
+
+.font-book-title {
+    font-family: "Hedvig Letters Serif", serif;
+    letter-spacing: 0.1rem;
+}
+
+.font-text {
+    font-family: "Ojuju", sans-serif;
+}
+
+.font-capitalized {
+    font-family: "Mate SC", serif;
+}
+
+.font-title {
+    font-family: "EB Garamond", serif;
+}

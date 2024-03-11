@@ -1,0 +1,177 @@
+<%- include("partials/header") -%>
+
+    <main class="grow w-1/2 self-center">
+
+        <div class="grid grid-cols-8 mb-3">
+            <button type="button" data-modal-target="crud-modal" data-modal-toggle="crud-modal"
+                class="col-span-2 text-center px-5 py-3 text-base font-medium inline-flex justify-center items-center text-sky-950 rounded-lg hover:bg-sky-950 hover:text-white border-2 border-sky-950">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-plus mr-2 flex-shrink-0                                     "
+                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 5l0 14" />
+                    <path d="M5 12l14 0" />
+                </svg>
+                New Book
+            </button>
+
+            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+                class="col-start-8 text-sky-950 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex-col lg:flex-row inline-flex justify-center items-center hover:bg-sky-950 hover:text-white border-2 border-sky-950"
+                type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-filter flex-shrink-0"
+                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path
+                        d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z" />
+                </svg>
+                <svg class="w-2.5 h-2.5 lg:ms-3 flex-shrink-0 mt-3 lg:mt-0" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 4 4 4-4" />
+                </svg>
+            </button>
+
+
+        </div>
+
+
+        <!-- Dropdown menu -->
+        <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 ">
+            <ul class="py-2 text-sm text-sky-950" aria-labelledby="dropdownDefaultButton">
+                <li>
+                    <a href="/" class="block px-4 py-2  hover:bg-sky-950 hover:text-white">By
+                        default</a>
+                </li>
+                <li>
+                    <a href="/byRating" class="block px-4 py-2  hover:bg-sky-950 hover:text-white">By
+                        rating</a>
+                </li>
+                <li>
+                    <a href="/byDate" class="block px-4 py-2  hover:bg-sky-950 hover:text-white">By
+                        date</a>
+                </li>
+            </ul>
+        </div>
+
+        <% for(let book of listBooks){ %>
+            <div class="flex flex-col items-center mb-3 lg:flex-row w-full ">
+                <img class="object-cover h-48 rounded-md" src="<%= book.cover_url %>" alt="">
+                <div class="grid grid-cols-2 px-4 w-full">
+                    <a href="/book?id=<%= book.idbook %>"
+                        class="mt-3 col-span-2 text-4xl font-book-title font-bold tracking-tight text-sky-950">
+                        <%= book.title %>
+                    </a>
+                    <h5 class="mb-2 col-span-2 text-sm font-text text-slate-600">
+                        <%= book.author %>
+                    </h5>
+                    <h3 class="font-text text-slate-700"><b>Genres:</b>
+                        <%= book.genre %>
+                    </h3>
+                    <h3 class="font-text text-slate-700"><b>ISBN:</b>
+                        <%= book.isbn %>
+                    </h3>
+                    <h3 class="font-text text-slate-700"><b>Publish year:</b>
+                        <%= book.publish_year %>
+                    </h3>
+                    <h3 class="font-text text-slate-700"><b>Publisher: </b>
+                        <%= book.publisher %>
+                    </h3>
+                    <h3 class="font-text text-slate-700"><b>Date read: </b>
+                        <%= book.read_date.toISOString().slice(0, 10) %>
+                    </h3>
+                    <h3 class="font-text text-slate-700"><b>Score: </b>
+                        <%= book.score %>/10
+                    </h3>
+                </div>
+                <form action="/deleteBook" method="POST">
+                    <input type="hidden" name="deleteBookId" value="<%= book.idbook %>">
+                    <button class="my-1 p-0.5 hover:border-red-700 rounded-lg hover:bg-red-700 hover:text-white"
+                        type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24"
+                            height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 7l16 0" />
+                            <path d="M10 11l0 6" />
+                            <path d="M14 11l0 6" />
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                        </svg>
+                    </button>
+                </form>
+
+            </div>
+            <% } %>
+
+                <!-- Main modal -->
+                <div id="crud-modal" tabindex="-1" aria-hidden="true"
+                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                    <div class="relative p-4 w-full max-w-md max-h-full">
+                        <!-- Modal content -->
+                        <div class="relative bg-slate-100 rounded-lg shadow">
+                            <!-- Modal header -->
+                            <div
+                                class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                <h3 class="text-lg font-semibold text-sky-950 ">
+                                    Add New Book
+                                </h3>
+                                <button type="button"
+                                    class="font-text text-gray-400 bg-transparent hover:bg-gray-200 hover:text-sky-950 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                    data-modal-toggle="crud-modal">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                            <!-- Modal body -->
+                            <form class="p-4 md:p-5" action="/addBook" method="POST">
+                                <div class="grid gap-4 mb-4 grid-cols-2">
+                                    <div class="col-span-2">
+                                        <label for="isbn"
+                                            class="block mb-2 text-sm font-medium text-sky-950">ISBN</label>
+                                        <input type="text" name="isbn" id="isbn"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
+                                            placeholder="Type book's ISBN" required="">
+                                    </div>
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <label for="score"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Score</label>
+                                        <input type="number" name="score" id="score" placeholder="10/10"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
+                                            min="0" max="10" step="1" required>
+
+                                    </div>
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <label for="read-date"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Read
+                                            Date</label>
+                                        <input type="date" name="read_date" id="read_date"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 ">
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                    class="text-sky-950  border-sky-950 border-2 inline-flex items-center hover:bg-sky-950 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                    Add new book
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+    </main>
+
+
+    <%- include("partials/footer") -%>
